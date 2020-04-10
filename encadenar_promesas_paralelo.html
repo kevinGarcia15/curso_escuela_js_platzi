@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>como funciona el tiempo en js</title>
+  </head>
+  <body>
+    <div class="sw">
+
+    </div>
+  </body>
+  <script
+			  src="https://code.jquery.com/jquery-3.4.1.min.js"
+			  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+			  crossorigin="anonymous">
+
+  </script>
+
+  <script type="text/javascript" >
+
+    const API_URL = 'https://swapi.co/api/'
+    const PEOPLE_URL = 'people/:id'
+    const PLANET_URL = 'planet/:id'
+    const STARSHIP_URL = 'starship/:id'
+  //  var person = prompt('ingresa el id del personaje')
+  //  const lukeURL = API_URL+PEOPLE_URL.replace(':id',person)
+    const options = {crossDomain : true}
+
+    function obtenerPersonaje(id){
+      return new Promise(function(resolve, reject){
+
+        const url = API_URL+PEOPLE_URL.replace(':id',id)
+        $.get(url,options, function (data){
+          resolve(data)
+        })
+        .fail(()=>reject(id))
+      })
+    }
+
+  function onError(id){
+    console.log(`òcurrio un error, no se encontro ${id}`)
+  }
+
+  var ids = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+  var promesas = ids.map(id => obtenerPersonaje(id))
+
+  Promise.all(promesas).then(personajes => console.log(personajes)).catch(onError)
+  // function itOK(personaje){
+  //   console.log(`mi nombre es ${personaje.name}`)
+  //   return obtenerPersonaje(2)
+  // }
+  //   obtenerPersonaje(1)
+  //     .then(itOK)
+  //     .then(itOK)
+  //      .catch(onError)
+   </script>
+</html>

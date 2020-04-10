@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>como funciona el tiempo en js</title>
+  </head>
+  <body>
+    <div class="sw">
+
+    </div>
+  </body>
+  <script
+			  src="https://code.jquery.com/jquery-3.4.1.min.js"
+			  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+			  crossorigin="anonymous">
+
+  </script>
+
+  <script type="text/javascript" >
+  $(document).ready(function(){
+
+    const API_URL = 'https://swapi.co/api/'
+    const PEOPLE_URL = 'people/:id'
+    const PLANET_URL = 'planet/:id'
+    const STARSHIP_URL = 'starship/:id'
+  //  var person = prompt('ingresa el id del personaje')
+  //  const lukeURL = API_URL+PEOPLE_URL.replace(':id',person)
+    const options = {crossDomain : true}
+
+    const funcionDeRespuesta = function(data){
+    $('.sw').append("<br>Hola, yo soy "+data.name+"</br>")
+    }
+
+    //con el metodo get, obtenemos los datos de la API linkeada
+//    $.get(lukeURL,options,funcionDeRespuesta)
+
+    function obtenerPersonaje(id){
+      return new Promise(function(resolve, reject){
+
+        const url = API_URL+PEOPLE_URL.replace(':id',id)
+        $.get(url,options, function (data){
+          resolve(data)
+        })
+        .fail(()=>reject(id))
+      })
+    }
+
+  function onError(id){
+    console.log(`òcurrio un error, no se encontro ${id}`)
+  }
+  function itOK(personaje){
+    console.log(`mi nombre es ${personaje.name}`)
+  }
+    obtenerPersonaje(1)
+      .then(itOK)
+      .catch(onError)
+ })
+  </script>
+</html>
